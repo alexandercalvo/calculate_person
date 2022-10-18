@@ -1,8 +1,9 @@
-let numero_personas=7;
-let numero_habitaciones=4;
-let numero_adultos=2;
+let numero_personas=8;
+let numero_habitaciones=3;
+let numero_adultos=9;
 let numero_ninos=2;
-let habitaciones= [7, 9,2, 4, 6, 8 ,9];
+let habitaciones= [7, 9,2, 4, 6, 8 ,9,2];
+console.log(habitaciones)
 habitaciones = habitaciones.sort();
 let objetos = [
     {  id: 7865660768494, title: 'paraiso-cafetero', handle: 'paraiso-cafetero', description: '<p><span data-mce-fragment="1">El hotel Campestre …ealizar la compra. Montenegro, Quindío</span></p>', published_at: '2022-08-12T20:22:59-05:00', capacity: 4, }, 
@@ -31,22 +32,20 @@ let objetos = [
     
     {id: 7872253493486, title: 'Hoteles Rurales', handle: 'hoteles-rurales', description: '', published_at: '2022-08-19T10:42:10-05:00', capacity: 2 }]
 
-    console.log(objetos)
+    //console.log(objetos)
     let habitacionesOrdnds = objetos;
-    console.table(habitacionesOrdnds )
+    //console.table(habitacionesOrdnds )
     let arrgloOrdenado = habitacionesOrdnds.sort((uno, dos)=>uno.capacity - dos.capacity);
-    console.table(arrgloOrdenado )
+   // console.table(arrgloOrdenado )
 
 
-let capacidad_ideal =Math.floor( numero_personas / numero_habitaciones)
-console.log("la capacidad es "+ capacidad_ideal)
 
-
-const existHabitacion_capacidad_ideal = (capacidad_ideal) =>{
+const existHabitacion_capacidad_ideal = (capacidad_ideal, arreglo_habitaciones) =>{
     let exist=false;
  
-    habitaciones.find((hbitacion)=>{
-        if(hbitacion==capacidad_ideal){ 
+    arreglo_habitaciones.find((habitacion)=>{
+        if(habitacion==capacidad_ideal){ 
+            arreglo_habitaciones.splice(  arreglo_habitaciones.indexOf(habitacion), 1);
             exist = true;
         }
 
@@ -56,21 +55,61 @@ return exist;
 
 
 const existHabitacion_capacidad_similar = (capacidad_ideal) =>{
-   return   habitaciones.find(habitacion=>habitacion >= capacidad_ideal);
+   return habitacion_similar = habitaciones.find(habitacion=>habitacion >= capacidad_ideal);
 
 }
 
-if(existHabitacion_capacidad_ideal(capacidad_ideal)){
-    numero_habitaciones= numero_habitaciones -1;
-    numero_personas = (numero_personas - capacidad_ideal);
+/*if(existHabitacion_capacidad_ideal(capacidad_ideal)){
+   
     console.log("es una habitacion")
 }else{
     numero_habitaciones= numero_habitaciones -1,
-    console.log("la capacidad", capacidad_ideal);
     numero_personas= numero_personas- existHabitacion_capacidad_similar(capacidad_ideal);
-    console.log(existHabitacion_capacidad_similar(capacidad_ideal))
-    console.log( "el nuevo número de personas es ", numero_personas)
+   
          
+}*/
+const  acomodacionPersonas = (numero_personas, numero_habitaciones) =>{
+        console.log("el numero de personas es", numero_personas)
+        console.log("el numero de habitaciones es", numero_habitaciones)
+    let capacidad_ideal = Math.floor( numero_personas / numero_habitaciones)
+ 
+    if(existHabitacion_capacidad_ideal(capacidad_ideal, habitaciones)){
+        numero_habitaciones= numero_habitaciones -1;
+        numero_personas = (numero_personas - capacidad_ideal);
+        console.log("La habitacion tiene una capacidad de ", capacidad_ideal);
+       
+    }else{
+        
+        numero_habitaciones= numero_habitaciones -1;
+        let capcidad = existHabitacion_capacidad_similar(capacidad_ideal);
+        numero_personas =  numero_personas- capcidad;
+        console.log("La habitacion tiene una capacidad de ", existHabitacion_capacidad_similar(capacidad_ideal));
+        habitaciones.splice( habitaciones.indexOf(capcidad), 1);
+    }
+
+   if(numero_personas >=0 && numero_habitaciones >=0 ){
+        return acomodacionPersonas(numero_personas, numero_habitaciones)
+   } else{
+    return;
+   }   
 }
+
+const calculoPersonaHabitacion = (numero_adultos, edades_ninos, numero_habitaciones, edad_maxima_nino_paga) =>{
+    //validando si el niño superea la edad de las politicas del hotel
+    let numero_personas = numero_adultos;
+    if(edades_ninos.length >0){
+        edades_ninos.map((age) =>{
+            if(age >= edad_maxima_nino_paga){
+                numero_personas  = numero_personas +1;
+            }
+        });
+    } 
+    //llamada a funcion recursiva para calcular la acomodacion de las personas
+     acomodacionPersonas(numero_personas, numero_habitaciones);
+        //const {numero_persona, numero_habitacione} = acomodacionPersonas(numero_personas, numero_habitaciones);
+
+}
+//hacer que la funcion sea recursiva
+calculoPersonaHabitacion (2,[14,16, 17], 2 , 10);
 
 

@@ -2,7 +2,7 @@ let numero_personas=8;
 let numero_habitaciones=3;
 let numero_adultos=9;
 let numero_ninos=2;
-let habitaciones= [7, 9,2, 4, 6, 8 ,9,2];
+let habitaciones= [7, 9,2, 4, 3, 6, 8 ,9,2];
 console.log(habitaciones)
 habitaciones = habitaciones.sort();
 let objetos = [
@@ -42,7 +42,7 @@ let objetos = [
 
 const existHabitacion_capacidad_ideal = (capacidad_ideal, arreglo_habitaciones) =>{
     let exist=false;
- 
+
     arreglo_habitaciones.find((habitacion)=>{
         if(habitacion==capacidad_ideal){ 
             arreglo_habitaciones.splice(  arreglo_habitaciones.indexOf(habitacion), 1);
@@ -76,6 +76,7 @@ const  acomodacionPersonas = (numero_personas, numero_habitaciones) =>{
     if(existHabitacion_capacidad_ideal(capacidad_ideal, habitaciones)){
         numero_habitaciones= numero_habitaciones -1;
         numero_personas = (numero_personas - capacidad_ideal);
+        
         console.log("La habitacion tiene una capacidad de ", capacidad_ideal);
        
     }else{
@@ -87,7 +88,7 @@ const  acomodacionPersonas = (numero_personas, numero_habitaciones) =>{
         habitaciones.splice( habitaciones.indexOf(capcidad), 1);
     }
 
-   if(numero_personas >=0 && numero_habitaciones >=0 ){
+   if(numero_personas >0 && numero_habitaciones >0 ){
         return acomodacionPersonas(numero_personas, numero_habitaciones)
    } else{
     return;
@@ -110,6 +111,24 @@ const calculoPersonaHabitacion = (numero_adultos, edades_ninos, numero_habitacio
 
 }
 //hacer que la funcion sea recursiva
-calculoPersonaHabitacion (2,[14,16, 17], 2 , 10);
+calculoPersonaHabitacion (4,[14,16, 17], 3 , 10);
 
 
+let botonPrueba = document.querySelector("#hola");
+
+let prueba = document.querySelector("#prueba");
+botonPrueba.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    axios.get("https://turismopanaca.myshopify.com/admin/api/2022-07/products.json", {headers:{
+    'X-Shopify-Storefront-Access-Token':'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','Content-Type':'application/json'}})
+.then(response => {
+   console.log(response)
+})
+.catch(e => {
+    console.log("ocurrio un error ", e)
+});
+
+   
+
+})
